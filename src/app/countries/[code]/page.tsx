@@ -2,7 +2,7 @@
 'use client';
 
 import { useAppDispatch, useAppSelector } from '@/store';
-import { fetchCountriesByCodes, fetchCountryByCode } from '@/store/slices/countriesSlice';
+import { fetchCountryByCode } from '@/store/slices/countriesSlice';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
@@ -254,9 +254,6 @@ export default function CountryDetailsPage() {
 
       if (missingBorderCountries.length > 0) {
         setBorderCountriesLoading(true);
-        dispatch(fetchCountriesByCodes(missingBorderCountries)).finally(() =>
-          setBorderCountriesLoading(false)
-        );
       }
     }
   }, [country, allCountries, dispatch]);
