@@ -10,7 +10,6 @@ const nextConfig = {
         pathname: '/**', // Allows all paths on cloudinary
       },
     ],
-    unoptimized: process.env.NODE_ENV === 'development', // Disable image optimization in development
   },
 };
 
