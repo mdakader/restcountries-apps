@@ -12,6 +12,7 @@ const nextConfig = {
     ],
     unoptimized: process.env.NODE_ENV === 'development', // Disable image optimization in development
   },
+  output: 'export',
 };
 
 module.exports = nextConfig;
