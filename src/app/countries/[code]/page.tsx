@@ -98,7 +98,7 @@ const BorderCountriesSidebar = ({
             No Border Countries
           </h4>
           <p className="text-sm text-gray-600 dark:text-gray-400">
-            This country doesn't share borders with any other countries. It might be an island
+            This country doesn&apos;t share borders with any other countries. It might be an island
             nation or have unique geographical features.
           </p>
         </div>
@@ -235,15 +235,19 @@ export default function CountryDetailsPage() {
   const country = useAppSelector((s) => s.countries.byCode[code]);
   const allCountries = useAppSelector((s) => s.countries.items);
   const status = useAppSelector((s) => s.countries.status);
+  const individualStatus = useAppSelector(
+    (s) => s.countries.individualCountryStatus[code] || 'idle'
+  );
   const error = useAppSelector((s) => s.countries.error);
 
   const [borderCountriesLoading, setBorderCountriesLoading] = useState(false);
 
+  // Fetch the main country if not available
   useEffect(() => {
-    if (!country && code) {
+    if (!country && code && individualStatus !== 'loading' && individualStatus !== 'succeeded') {
       dispatch(fetchCountryByCode(code));
     }
-  }, [country, code, dispatch]);
+  }, [country, code, dispatch, individualStatus]);
 
   // Fetch border countries details
   useEffect(() => {
@@ -254,15 +258,29 @@ export default function CountryDetailsPage() {
 
       if (missingBorderCountries.length > 0) {
         setBorderCountriesLoading(true);
+        // Fetch missing border countries
+        Promise.all(
+          missingBorderCountries.map((borderCode) => dispatch(fetchCountryByCode(borderCode)))
+        ).finally(() => {
+          setBorderCountriesLoading(false);
+        });
+      } else {
+        setBorderCountriesLoading(false);
       }
+    } else {
+      setBorderCountriesLoading(false);
     }
-  }, [country, allCountries, dispatch]);
+  }, [country?.borders, allCountries, dispatch]);
 
   const borderCountries = country?.borders
-    ? allCountries.filter((c) => country.borders.includes(c.cca3))
+    ? allCountries.filter((c) => country.borders?.includes(c.cca3))
     : [];
 
-  if (status === 'loading') {
+  // Determine loading and error states
+  const isLoading = individualStatus === 'loading' || (status === 'loading' && !country);
+  const hasFailed = individualStatus === 'failed' || (status === 'failed' && !country);
+
+  if (isLoading) {
     return (
       <main className="min-h-screen bg-gray-50 dark:bg-gray-900 py-10 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -313,7 +331,7 @@ export default function CountryDetailsPage() {
     );
   }
 
-  if (status === 'failed' || !country) {
+  if (hasFailed || (!country && individualStatus === 'succeeded')) {
     return (
       <main className="min-h-screen bg-gray-50 dark:bg-gray-900 py-10 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -346,6 +364,18 @@ export default function CountryDetailsPage() {
             <p className="text-gray-600 dark:text-gray-400 mb-6">
               {error || 'The requested country could not be found.'}
             </p>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
+  if (!country) {
+    return (
+      <main className="min-h-screen bg-gray-50 dark:bg-gray-900 py-10 transition-colors duration-300">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center py-12">
+            <LoadingSpinner text="Loading country details..." />
           </div>
         </div>
       </main>
@@ -432,12 +462,6 @@ export default function CountryDetailsPage() {
                       </p>
                       <p className="text-gray-600 dark:text-gray-300 transition-colors duration-300">
                         <span className="font-semibold text-gray-800 dark:text-gray-200">
-                          Top Level Domain:
-                        </span>{' '}
-                        {country.tld?.join(', ') || '—'}
-                      </p>
-                      <p className="text-gray-600 dark:text-gray-300 transition-colors duration-300">
-                        <span className="font-semibold text-gray-800 dark:text-gray-200">
                           Currencies:
                         </span>{' '}
                         {currencies}
@@ -458,7 +482,7 @@ export default function CountryDetailsPage() {
           {/* Sidebar for Border Countries */}
           <div className="lg:col-span-1">
             <BorderCountriesSidebar
-              borderCodes={country.borders || []}
+              borderCodes={country?.borders || []}
               borderCountries={borderCountries}
               isLoading={borderCountriesLoading}
               currentCountryCode={code}
