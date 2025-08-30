@@ -10,6 +10,7 @@ const nextConfig = {
         pathname: '/**', // Allows all paths on cloudinary
       },
     ],
+    unoptimized: true,
   },
 };
 
