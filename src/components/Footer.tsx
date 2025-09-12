@@ -41,14 +41,6 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/about"
-                  className="text-gray-300 dark:text-gray-300 light:text-gray-600 hover:text-white dark:hover:text-white light:hover:text-gray-900 transition-colors duration-200"
-                >
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link
                   href="/projects"
                   className="text-gray-300 dark:text-gray-300 light:text-gray-600 hover:text-white dark:hover:text-white light:hover:text-gray-900 transition-colors duration-200"
                 >
@@ -61,14 +53,6 @@ const Footer = () => {
                   className="text-gray-300 dark:text-gray-300 light:text-gray-600 hover:text-white dark:hover:text-white light:hover:text-gray-900 transition-colors duration-200"
                 >
                   Countries
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/contact"
-                  className="text-gray-300 dark:text-gray-300 light:text-gray-600 hover:text-white dark:hover:text-white light:hover:text-gray-900 transition-colors duration-200"
-                >
-                  Contact
                 </Link>
               </li>
             </ul>
