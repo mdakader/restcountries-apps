@@ -81,36 +81,5 @@ npm run build
 ```
 
 2. Use **Netlify CLI** or link your repo in Netlify.
-3. If using **remote images**, make sure `next.config.js` has:
-
-```js
-images: {
-  remotePatterns: [
-    {
-      protocol: 'https',
-      hostname: 'res.cloudinary.com',
-      pathname: '/**',
-    },
-  ],
-  unoptimized: true,
-}
-```
 
 4. Publish the folder: `out/` if using `next export` or use **Netlify Next.js plugin** for SSR.
-
----
-
-## 🖼 Images
-
-* Local images: place them in `/public/images` and use absolute paths: `/images/flag.png`
-* Remote images: allowed from Cloudinary or other configured domains
-
----
-
-## 🔗 Sources & References
-
-* [Tailwind CSS Setup for Next.js](https://tailwindcss.com/docs/installation/framework-guides/nextjs)
-* [REST Countries API](https://restcountries.com/#rest-countries)
-* [Redux Toolkit](https://redux-toolkit.js.org/)
-
----
