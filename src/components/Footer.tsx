@@ -14,7 +14,7 @@ const Footer = () => {
             <h3 className="text-white dark:text-white light:text-gray-900 text-lg font-semibold mb-4 transition-colors duration-300">
               <Link
                 href="/"
-                className="flex items-center gap-2 text-gray-900 dark:text-white font-bold text-2xl hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                className="flex items-center gap-2 dark:text-white light:text-gray-900 font-bold text-2xl hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
               >
                 <Globe size={28} />
                 Countries
