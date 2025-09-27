@@ -41,56 +41,6 @@ const Navbar = () => {
             >
               Countries
             </Link>
-            <Link
-              href="/about"
-              className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-            >
-              About
-            </Link>
-
-            {/* Dropdown */}
-            <div
-              className="relative"
-              onMouseEnter={() => setIsDropdownOpen(true)}
-              onMouseLeave={() => setIsDropdownOpen(false)}
-            >
-              <button className="flex items-center gap-1 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                Services <ChevronDown size={16} />
-              </button>
-
-              {/* Dropdown Menu */}
-              <div
-                className={`absolute top-full left-0 mt-2 w-48 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 transition-all duration-200
-                  ${isDropdownOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}
-                `}
-              >
-                <Link
-                  href="/services/web"
-                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
-                >
-                  Web Development
-                </Link>
-                <Link
-                  href="/services/mobile"
-                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
-                >
-                  Mobile Development
-                </Link>
-                <Link
-                  href="/services/seo"
-                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
-                >
-                  SEO
-                </Link>
-              </div>
-            </div>
-
-            <Link
-              href="/contact"
-              className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-            >
-              Contact
-            </Link>
 
             {/* Theme Toggle Button */}
             <button
